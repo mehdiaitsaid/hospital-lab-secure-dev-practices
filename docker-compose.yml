@@ -1,0 +1,49 @@
+services:
+  # The Database Service
+  mysql_db:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  # The PHP Application Service
+  app:
+    # Use 'build' to tell Docker Compose to look for the Dockerfile in the current directory
+    build: .
+    container_name: hospital_emr
+    ports:
+      - "8080:80" # Maps host port 80 to container port 80
+    # Links the 'app' container to the 'db' container
+    depends_on:
+      - mysql_db
+    # Mounts your local 'src' directory into the container's web root.
+    # This allows you to modify code on your host machine and see changes instantly.
+    volumes:
+      - ./:/var/www/html/
+
+  # The phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    # The 'links' directive is legacy; 'depends_on' is preferred for ordering.
+    # The database connection still works via the hostname 'db'.
+    depends_on:
+      - mysql_db
+    environment:
+      # Use the service name 'db' as the host, not PMA_HOST
+      PMA_HOST: mysql_db 
+      PMA_PORT: 3306 # The internal port of the db service
+      PMA_ARBITRARY: ${PMA_ARBITRARY}
+    restart: always
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
+
+volumes:
+  dbdata:

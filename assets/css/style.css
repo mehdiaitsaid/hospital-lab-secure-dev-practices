@@ -1,0 +1,43 @@
+/* General styling */
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f8f9fa;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+#sidebar-wrapper {
+    min-width: 220px;
+    max-width: 220px;
+    transition: all 0.3s;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -220px;
+}
+
+/* Page content */
+#page-content-wrapper {
+    width: 100%;
+}
+
+/* Sidebar heading */
+.sidebar-heading {
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+}
+
+/* List group hover */
+.list-group-item-action:hover {
+    background-color: #e9ecef;
+}
+
+/* Footer */
+footer.footer {
+    position: relative;
+}
