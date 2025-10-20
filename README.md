@@ -56,7 +56,7 @@ hospital_emr/
 
 ---
 
-## Quick start (instructor / local run)
+## Quick start 
 
 1. Prepare an isolated environment (VM or Docker) with PHP and MySQL/MariaDB.
 2. Create a database and import `sql/hospital_emr.sql` and `sql/seed_data.sql`.
